@@ -1,0 +1,13 @@
+[Unit]
+Description=Demo app on port 8080
+After=network.target
+
+[Service]
+User=candidate
+Group=candidate
+ExecStart=/usr/bin/python3 /opt/demo-app/app.py 8080
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

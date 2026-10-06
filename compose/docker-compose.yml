@@ -1,0 +1,25 @@
+services:
+  app8080:
+    image: python:3.12-slim
+    command: python /app/app.py 8080
+    volumes:
+      - ./app:/app:ro
+
+  app8082:
+    image: python:3.12-slim
+    command: python /app/app.py 8082
+    volumes:
+      - ./app:/app:ro
+
+  nginx:
+    image: nginx:1.28
+    ports:
+      - "8088:80"
+      - "8443:443"
+    volumes:
+      - ./nginx/demo.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./site:/usr/share/nginx/site:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app8080
+      - app8082
